@@ -36,7 +36,7 @@ class VitaBuilder internal constructor(@PublishedApi internal val owner: VitaOwn
     internal inline fun <reified T : ViewModel> VitaOwner.Single.getViewModel(noinline factoryFun: FactoryFun<T>? = null): T {
         val factory = factoryFun?.let {
             object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>) = it() as T
+                override fun <T : ViewModel> create(modelClass: Class<T>) = it() as T
             }
         }
         return vita.createSingleProvider(lifecycleOwner, factory)[T::class.java]
@@ -47,7 +47,7 @@ class VitaBuilder internal constructor(@PublishedApi internal val owner: VitaOwn
     internal inline fun <reified T : ViewModel> VitaOwner.Multiple.getViewModel(noinline factoryFun: FactoryFun<T>? = null): T {
         val factory = factoryFun?.let {
             object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>) = it() as T
+                override fun <T : ViewModel> create(modelClass: Class<T>) = it() as T
             }
         }
         return vita.createMultipleProvider(T::class.java, lifecycleOwner, factory)[T::class.java]
@@ -58,7 +58,7 @@ class VitaBuilder internal constructor(@PublishedApi internal val owner: VitaOwn
     internal inline fun <reified T : ViewModel> VitaOwner.None.getViewModel(noinline factoryFun: FactoryFun<T>? = null): T {
         val factory = factoryFun?.let {
             object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>) = it() as T
+                override fun <T : ViewModel> create(modelClass: Class<T>) = it() as T
             }
         }
         return vita.createGlobalProvider(factory)[T::class.java]
